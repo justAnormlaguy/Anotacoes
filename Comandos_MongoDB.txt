@@ -1,0 +1,146 @@
+Comandos para MongoDB Compass
+
+
+
+//utilização do set para adicionar/modificar um campo
+db.colecao.updateOne({
+					{nome: "Lucas"},		//filtro para pesquisa
+					{$set:{cargo:"..."}}	//atualização
+					})		
+
+########################################################################
+					
+//utilização do $unset para remover um campo
+db.colecao.updateOne({
+					{nome: "Lucas"},						//filtro para pesquisa
+						{$unset:{"contato.telefone":""}}	//o valor não importa, apenas a chave; Acessando um doc dentro de outro doc ' "doc1.doc2": '
+					)
+
+########################################################################
+
+//utilização do $rename para renomear campos
+db.colecao.updateMany(
+					{},											//filtro vazio para escolher todos
+					{$rename:{"habilidades": "competencias"}}	//trocando habilidades por competencias
+					)
+					
+########################################################################
+
+//utilização do $currentDate para registrar a data exata de uma modificação
+db.colecao.updateOne(
+					{nome:"Lucas"},								//filtro para pesquisa
+					{
+					$set:{cargo:"Diretora de Projetos"},
+					$currentDate:{ultima_modificacao: true}		//registrando a data da modificação
+					}
+					)
+					
+########################################################################
+
+//utilização do $inc para incrementar um valor
+db.colecao.updateMany(
+					{departamento: "Tecnologia"},	//filtro para pesquisa
+					{$inc:{salario: 500}}			//adicionando 500 reais para todos do dp de tecnologia
+					)
+					
+########################################################################
+
+//utilização do $mul para multiplicação
+db.colecao.updateMany(
+					{ativo:true},				//filtro para pesquisa
+					{$mul: {salario: 1.05}}		//multiplicando o salario de todos em 5%
+					)
+
+########################################################################
+
+//utilização do $push para adicionar um elemento em um array
+db.colecao.updateOne(
+					{nome:"Lucas"},							//filtro para pesquisa
+					{$push:{competencias: "TypeScript"}}	//adicionando o elemento para o campo "competencias"
+					)
+
+########################################################################
+
+//utilização do $pull para retirar um elemento de um array
+db.colecao.updateOne(
+					{nome: "Lucas"},				//filtro para pesquisa
+					{$pull:{competencias: "Jira"}}	//retirando a competencia jira
+					)
+
+########################################################################
+
+//utilizaçãodo $pop para remover o primeiro ou ultimo elemento de um array
+db.colecao.updateOne(
+					{nome: "Lucas"},			
+					{$pop:{competencias: -1}}	//utilizar o -1 para remover o primeiro item e 1 para remover o ultimo 
+					)
+		
+########################################################################
+
+//utilização do $addToSet para adicionar um elemento em array apenas se ele não existir
+db.colecao.updateOne(
+					{nome: "Lucas"}.
+					{$addToSet: {competencias: "React"}}	//só vai adicionar caso ele não tenha o React, se tiver apenas ignora
+					)
+
+########################################################################
+
+//utilização do deleteOne e deleteMany
+//Antes de deletar qualquer documento verificar se vai ser mesmo deletado
+
+db.colecao.deleteMany({ativo: false})	//deletando todos os documentos que estão com o campo ativo: false
+
+db.colecao.deleteOne({nome:"Lucas"})	//deletando o usuario Lucas
+
+########################################################################
+
+//utilização do find
+db.colecao.find(
+				{departamento: "Tecnologia"},	//filtro para pesquisa
+				{nome: 1, salario: 1, _id: 0}	//projeção, onde 1 é true e 0 é false
+				).sort({salario:1}) 			//aqui temos o sort que é 1 para crescente e -1 para decrescente
+				 .limit(3)						//ou limit para limitar a pesquisa
+				
+db.colecao.find({habilidades: "React"})	//encontrando todos os usuarios que tem react como habilidade
+db.colecao.find({habilidades:{$all: ["AWS", "Python"]}})	//encontrando todos os usuarios que no campo habilidades contenham AWS e Python
+db.colecao.find({departamento: "Tecnologia", ativo: true}})	//encontrando todos do dp de tecnologia e q estão ativos
+
+########################################################################
+
+//utilizando o $gt/$gte/$lt/$lte
+db.colecao.find({idade:{$gt:30}})	//encontrando todos os usuarios com mais de 30 anos
+db.colecao.find({salario:{$gte: 7000, $lte: 9000}})	//encontrando todos os usuarios com salario entre 7000 e 9000
+
+########################################################################
+
+//utilizando o $regex
+db.funcionarios.find({nome:{$regex: /^A/}})	//encontrando todos os usuarios cujo nome começa com a letra A
+db.colecao.find({cargo:{$regex: /Desenvolvedor/i}})	//encontrando todos os usuarios que tem desenvolvedor no cargo, o i serve para encontrar lower e upper case
+
+########################################################################
+
+//utilizando o $exists
+db.colecao.find({"contato.telefone": {$exists: true}})	//encontrando todos com numero de telefone
+
+########################################################################
+
+//utilizando o $type para ver o tipo de dado
+db.colecao.find({salario: {$type: "double"}})	//todos numero de ponto flutuante
+
+//utilizando o $or e $in
+db.colecao.find({
+				$or:[
+					{departamento: "RH"},
+					{departamento: "Projetos"}	//encontrando todos que são ou do RH ou do Projetos
+					]
+				})
+
+db.colecao.find({
+				departamento: "Tecnologia",		//condição AND
+				$or: [
+					{idade:{$gt:30}},
+					{habilidades: "AWS"}		//condição OR
+					]
+				})
+				
+db.colecao.find({cargo: {$in: ["Dev", "Po"]}})
