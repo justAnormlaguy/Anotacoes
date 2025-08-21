@@ -1,0 +1,294 @@
+
+###########################################################################################
+//EX 1
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+
+<declaracao-inicializada> ::= <id> "=" <numero>
+
+###########################################################################################
+//EX 2
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+
+<declaracao-inicializada> ::= <id> "=" <expressao>
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "*" <expressao>
+
+###########################################################################################
+//EX 3
+			
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <expressao>
+
+<expr-booleana> ::= <expressao> <op-relacional> <expressao>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+<condicional> ::= "if (" <expr-booleana> ")" <expressao>
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"	
+
+###########################################################################################
+//EX 4
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <expressao>
+
+<expr-booleana> ::= <expressao> <op-relacional> <expressao>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+<condicional> ::= "if (" <expr-booleana> ")" <expressao>
+                | "if (" <expr-booleana> ")" <expressao> "else" <expressao>
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"	
+
+###########################################################################################
+//EX 5
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <expressao>
+
+<expr-booleana> ::= <expressao> <op-relacional> <expressao>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"	
+
+<repeticao> ::= "while (" <expr-booleana> ")" <expressao>
+
+<repeticao> ::= "for (" <expressao> ")" <expressao>
+
+###########################################################################################
+//EX 6
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <numero>
+
+<lista-comandos> ::= <comando>
+                    | <comando> <lista-comandos>
+
+<comando> ::= <declaracao-inicializada> ";"
+
+<bloco> ::= "{" <lista-comandos> "}"
+
+###########################################################################################
+//EX 7
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <numero>
+
+<lista-comandos> ::= <comando>
+                    | <comando> <lista-comandos>
+
+<comando> ::= <declaracao-inicializada> ";"
+
+<bloco> ::= "{" <lista-comandos> "}"
+
+<expr-booleana> ::= <expressao> <op-relacional> <bloco>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+<condicional> ::= "if (" <expr-booleana> ")" <bloco>
+                | "if (" <expr-booleana> ")" <bloco> "else" <bloco>
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"	
+
+###########################################################################################
+//EX 8
+
+<lista-comandos> ::= <comando>
+                    | <comando> <lista-comandos>
+
+<comando> ::= <declaracao-inicializada> ";"
+
+<bloco> ::= "{" <lista-comandos> "}"
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <expressao>
+
+<expr-booleana> ::= <expressao> <op-relacional> <bloco>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"	
+
+<repeticao> ::= "while (" <expr-booleana> ")" <bloco>
+
+###########################################################################################
+//EX 9
+
+<lista-comandos> ::= <comando>
+                    | <comando> <lista-comandos>
+
+<comando> ::= <declaracao-inicializada> ";"
+
+<bloco> ::= "{" <lista-comandos> "}"
+
+<numero> ::= <digito> | <numero> <digito>
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+
+<declaracao-inicializada> ::= <id> "=" <expressao>
+
+<expr-booleana> ::= <expressao> <op-relacional> <bloco>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"	
+
+<repeticao> ::= "for (" <expressao> ")" <bloco>
+
+###########################################################################################
+//EX 10
+
+<program> ::= <lista-comandos>
+<lista-comandos> ::= <comando>
+                    | <comando> <lista-comandos>
+
+<comando> ::= <declaracao> ";"
+            | <declaracao-inicializada> ";"
+            | <atribuicao> ";"
+            | <condicional>
+            | <repeticao>
+            | <bloco>
+
+<bloco> ::= "{" <lista-comandos> "}"
+
+<condicional> ::= "if (" <expr-booleana> ")" <bloco>
+                | "if (" <expr-booleana> ")" <bloco> "else" <bloco>
+
+<repeticao> ::= "while (" <expr-booleana> ")" <bloco>
+
+<expr-booleana> ::= <expressao> <op-relacional> <expressao>
+                | "true"
+                | "false"
+<op-relacional> ::= "<" | ">" | "==" | "<>"
+
+
+<declaracao> ::= "int" <id>
+<declaracao-inicializada> ::= "int" <id> "=" <expressao>
+<atribuicao> ::= <id> "=" <expressao>
+
+<expressao> ::= <id>
+            | <numero>
+            | <expressao> "+" <expressao>
+            | <expressao> "-" <expressao>
+            | <expressao> "*" <expressao>
+            | <expressao> "/" <expressao>
+            | "(" <expressao> ")"
+
+<id> ::= <letra>
+        | <id> <letra>
+        | <id> <digito>
+        | <id> "_"
+<numero> ::= <digito> | <numero> <digito>
+
+<letra> ::= "A" | ... | "Z" | "a" | ... | "z"
+<digito> ::= "0" | "1" | "2" | "3"| "4"| "5"| "6"| "7"| "8"| "9"
+
