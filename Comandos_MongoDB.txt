@@ -143,4 +143,253 @@ db.colecao.find({
 					]
 				})
 				
+
 db.colecao.find({cargo: {$in: ["Dev", "Po"]}})
+
+
+===========================================================================
+//Retornar uma array com seus 2 primeiros elementos
+db.campeoes.find(
+  {},{skins:{$slice:2}},{nome:1,skins:1}
+)
+
+============================================================================
+
+//$ne seleciona os documentos onde o valor do campo especificado não é igual ao valor especificado. Isso inclui documentos que não contêm o campo especificado.
+
+db.campeoes.find(
+  {recurso:{$ne:"Mana"}},{nome:1, recurso:1,_id:0}
+)
+
+==============================================================================
+
+//Ele buscar apenas pelos dois elementos do Array e nenhum mais que tenha o nome deles em outros arrays
+db.campeoes.find(
+         {skins:["PROJETO","Florescer Espiritual"]},{nome:1,skins:1,_id:0}
+  )
+
+===============================================================================
+
+//remove todas as instâncias dos valores especificados de uma array existente
+
+db.campeoes.updateOne(
+	{nome:"Jinx"},
+  {$pullAll:{skins:["Odisseia","Arcane"]}}
+)
+
+===============================================================================
+
+//inc
+
+db.campeoes.updateOne(
+  {nome:"Jinx"},
+  {$inc:{"estatisticas.dano_ataque":-2}}
+)
+
+==============================================================================
+
+//Usando $elemMatch, buscar campeões que tenham uma habilidade do tipo "R"
+
+db.campeoes.find({
+  habilidades: {
+    $elemMatch: { tipo: "R" }
+  }
+})
+
+===============================================================================
+
+//Usando .sort(), ordenar campeões pelo maior dano de ataque
+
+db.campeoes.find().sort(
+                  { "estatisticas.dano_ataque": -1 })
+
+=================================================================================
+
+Usando .limit(), retornar apenas os 3 campeões com maior dano de ataque
+
+db.campeoes.find().sort(
+                    { "estatisticas.dano_ataque": -1 }).limit(3)
+
+
+==================================================================================
+
+Validação createCollection
+
+1. Coleção livros (Simples):
+
+db.createCollection("Livros", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["titulo", "ano_publicacao"],
+      properties: {
+        titulo:{ bsontype: "string", description: "O titulo é obrigatorio." },
+        ano_publicacao: { bsonType:"int", description: "o ano de publicação é obrigatorio."}
+        }
+      }
+    }
+  })
+
+2. Coleção autores:
+
+db.createCollection("autores",{
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nome"],
+      properties:{
+        nome:{bsonType:"string", description:"O nome é obrigatorio"},
+        ano_nascimento:{bsonType:"int", description:"A data de nascimento é obrigatoria"}
+      }
+    }
+  }
+})
+
+
+3. Coleção usuarios:
+
+db.createCollection("usuarios", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nome", "email", "ativo"],
+      properties: {
+        nome:{bsonType:"string", description:"O nome é obrigatorio"},
+        email:{bsonType:"string", description:"O e-mail é obrigatorio"},
+        ativo:{bsonType:"bool"}
+      }
+    }
+  }
+})
+
+
+4. Coleção emprestimos:
+
+db.createCollection("emprestimos", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["livro_id", "usuario_id", "data_emprestimo"],
+      properties: {
+        livro_id:{bsonType:"string", description:"Livro_id é obrigatorio"},
+        usuario_id:{bsonType:"string", description:"Usuario_id é obrigatorio"},
+        data_emprestimo:{bsonType:"date", description:"data_emprestimo é obrigatorio"}
+      }
+    }
+  }
+})
+
+
+5. Coleção editoras:
+
+db.createCollection("editoras",{
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nome"],
+      properties: {
+        nome:{bsonType:"string", description:"nome é obrigatorio"},
+        cidade:{bsonType:"string", description:"cidade é opcional"}
+      }
+    }
+  }
+})
+
+
+6. Coleção salas_reuniao:
+
+db.createCollection("salas_reuniao",{
+  validator: {
+    $jsonSchema:{
+      bsonType: "object",
+      required: ["nome", "capacidade"],
+      properties:{
+        nome:{bsonType:"string", description:"nome é obrigatorio"},
+        capacidade:{bsonType:"int", description:"capacidade é obrigatorio"},
+        possui_projetor:{bsonType:"bool", description:"Bool é opcional"}
+      }
+    }
+  }
+})
+
+7. Coleção eventos_calendario:
+
+db.createCollection("eventos_calendario",{
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["titulo", "data_inicio"],
+      properties:{
+        titulo:{bsonType:"string", description:"Titulo é obrigatorio"},
+        data_inicio:{bsonType:"date", description:"data_inicio é obrigatorio"},
+        data_fim:{bsonType:"date", description:"data_fim é opcional"}
+      }
+    }
+  }
+})
+
+8. Coleção fornecedores:
+
+db.createCollection("fornecedores",{
+  validator:{
+    $jsonSchema:{
+      bsonType: "object",
+      required: ["nome_empresa", "nif"],
+      properties:{
+        nome_empresa:{bsonType:"string", description:"nome_empresa é obrigatorio"},
+        nif:{bsonType:"string", description:"nif é obrigatorio"},
+        telefone:{bsonType:"string", description:"telefone é opcional"}
+      }
+    }
+  }
+})
+
+9. Coleção inventario_ti:
+
+db.createCollection("iventario_ti",{
+  validator: {
+    $jsonSchema:{
+      bsonType:"object",
+      required:["item_id", "tipo", "data_compra"],
+      properties:{
+        item_id:{bsonType:"string", description:"item_id é obrigatorio"},
+        tipo:{bsonType:"string", description:"tipo é obrigatorio"},
+        data_compra:{bsonType:"date", description:"data_compra é obrigatorio"}
+      }
+    }
+  }
+})
+
+10. Coleção cursos_online:
+
+db.createCollection("cursos_online",{
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required:[ "nome_curso", "duracao_horas", "possui_certificado" ],
+      properties:{
+        nome_curso:{bsonType:"string", description:"nome_curso é obrigatorio"},
+        duracao_horas:{bsonType:"int", description:"duracao_horas é obrigatorio"},
+        possui_certificado:{bsonType:"bool", description:"possui_certificado é obrigatorio"}
+      }
+    }
+  }
+})
+
+==========================================================================================================
+
+para inserir na coleção é só fazer isso
+
+db.cursos_online.insertOne(
+  {nome_curso: "Engenharia de Software",
+   duracao_horas: 40,
+   possui_certificado: true 
+  })
+
+e depois para consultar
+
+db.cursos_online.find()
+
+============================================================================================================
+
+
